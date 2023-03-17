@@ -1,0 +1,12 @@
+arch:
+  - arm64
+os:
+  - linux
+services:
+  - docker
+before_install:
+  - docker login -u "$DOCKER_USERNAME" -p $DOCKER_PASSWORD registry.cn-hangzhou.aliyuncs.com
+script: 
+  - export BUILD_TAG=latest
+  - docker build  -t registry.cn-hangzhou.aliyuncs.com/toyangdon/chatgpt-demo:$BUILD_TAG .
+  - docker push registry.cn-hangzhou.aliyuncs.com/toyangdon/chatgpt-demo:$BUILD_TAG
