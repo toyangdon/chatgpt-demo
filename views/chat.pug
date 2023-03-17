@@ -10,11 +10,17 @@ block content
   script(src="/javascripts/jquery-1.8.0.js") 
   script().
     $("#sendBtn").click(function(){
-        console.log("test");
+        $("#sendBtn").attr("disabled", true);
         input=$("#input").val();
         $("#outputDiv").append("<p><pre><b>你：</b>"+input+"</pre></p>");
-        $.get("/chat/send",{input: input}, function(result){
-        $("#outputDiv").append("<p><pre><b>chatgpt：</b>"+result+"</pre></p>");},"text");
+        $("#outputDiv").scrollTop($('#outputDiv').prop("scrollHeight"))
+        $.get("/chat/send",{input: input},
+          function(result){
+             $("#outputDiv").append("<p><pre><b>chatgpt：</b>"+result+"</pre></p>");
+             $("#outputDiv").scrollTop($('#outputDiv').prop("scrollHeight"))
+             $("#sendBtn").attr("disabled", false);
+          }
+          ,"text");
         $("#input").val("")
     })
 

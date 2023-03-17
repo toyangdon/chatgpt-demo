@@ -12,7 +12,12 @@ router.get('/', async function(req, res, next) {
 router.get('/send', async function(req, res, next) {
 
   let input=req.query["input"]
-  let result=await send(input,req.session);
+  let result;
+  try{
+    result=await send(input,req.session);
+  }catch(e){
+    result="服务器报错，"+e.message;
+  }
   res.send(result);
 }
 );
