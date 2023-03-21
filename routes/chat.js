@@ -12,9 +12,10 @@ router.get('/', async function(req, res, next) {
 router.get('/send', async function(req, res, next) {
 
   let input=req.query["input"]
+  let systemMessage=req.query["systemMessage"]
   let result;
   try{
-    result=await send(input,req.session);
+    result=await send(input,systemMessage,req.session);
   }catch(e){
     result="服务器报错，"+e.message;
   }
@@ -34,7 +35,7 @@ router.get('/setAccessToken',  function(req, res, next) {
 }
 );
 
-async function send(input,session) {
+async function send(input,systemMessage,session) {
   console.log(session)
   if(input==null||input==''){
     console.log("Input为空")
@@ -49,7 +50,8 @@ async function send(input,session) {
   console.log("send:"+input)
   console.log("parentMessageId:"+session.parentMessageId);
   let parentMessageId=session.parentMessageId;
-  const res = await api.sendMessage(input,{parentMessageId: parentMessageId,conversationId:session.conversationId});
+  const res = await api.sendMessage(input
+    ,{parentMessageId: parentMessageId,conversationId:session.conversationId,systemMessage:systemMessage});
   session.parentMessageId=res.id;
   session.conversationId=res.conversationId;
   console.log("recieve:"+res.text);
