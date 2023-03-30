@@ -46,7 +46,8 @@ async function send(input,systemMessage,session) {
   // To use ESM in CommonJS, you can use a dynamic import
   const { ChatGPTUnofficialProxyAPI } = await import('chatgpt')
   const api = new ChatGPTUnofficialProxyAPI({ 
-    accessToken: chatgptAccessToken
+    accessToken: chatgptAccessToken,
+    apiReverseProxyUrl: 'https://api.pawan.krd/backend-api/conversation'
   })
   console.log("send:"+input)
   console.log("parentMessageId:"+session.parentMessageId);
