@@ -53,7 +53,10 @@ async function send(input,systemMessage,session) {
   console.log("parentMessageId:"+session.parentMessageId);
   let parentMessageId=session.parentMessageId;
   const res = await api.sendMessage(input
-    ,{parentMessageId: parentMessageId,conversationId:session.conversationId,systemMessage:systemMessage});
+    ,{parentMessageId: parentMessageId
+      ,conversationId:session.conversationId,systemMessage:systemMessage
+      ,timeoutMs: 2 * 60 * 1000
+    });
   session.parentMessageId=res.id;
   session.conversationId=res.conversationId;
   console.log("recieve:"+res.text);
